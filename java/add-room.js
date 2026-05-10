@@ -1,55 +1,88 @@
-const btnAddRoom = document.getElementById("btn-add-room");
+// ==========================
+// ADD ROOM TO FIREBASE
+// ==========================
 
-btnAddRoom.addEventListener("click", () => {
-    // lấy giá trị từ các input
-    const name = document.getElementById("name-room").value;
-    const location = document.getElementById("location-room").value;
-    const person = document.getElementById("person-room").value;
-    const desc = document.getElementById("desc-room").value;
-    const price = document.getElementById("price-room").value;
-    const image = document.getElementById("image-url").value;
+document.addEventListener("DOMContentLoaded", () => {
+    const btnAddRoom = document.getElementById("btn-add-room");
 
-    // kiểm tra dữ liệu hợp lệ
-    if (!name) {
-        alert("Vui lòng nhập tên món ăn");
-        return;
-    }
-    if (!location) {
-        alert("Vui lòng nhập tên món ăn");
-        return;
-    }
-    if (!person) {
-        alert("Vui lòng nhập tên món ăn");
-        return;
-    }
-    if (!desc) {
-        alert("Vui lòng nhập mô tả món ăn");
-        return;
-    }
-    if (!image) {
-        alert("Vui lòng nhập URL hình ảnh món ăn");
-        return;
-    }
-    if (!price) {
-        alert("Vui lòng nhập tên món ăn");
-        return;
-    }
-    // tạo đối tượng mới
-    const newRoom = {
-        id: Date.now(),
-        name: name,
-        location: location,
-        person: person,
-        desc: desc,
-        price: price,
-        image: image,
-    };
-    // lấy danh sách món ăn từ localStorage
-    const rooms = JSON.parse(localStorage.getItem("rooms")) || [];
-    // thêm đối tượng mới vào danh sách
-    rooms.push(newRoom);
-    // lưu danh sách đối tượng vào localStorage
-    localStorage.setItem("rooms", JSON.stringify(rooms));
-    // chuyển về trang
-    window.location.href = "index.html";
+    const roomName = document.getElementById("name-room");
+    const roomLocation = document.getElementById("location-room");
+    const roomPerson = document.getElementById("person-room");
+    const roomDesc = document.getElementById("desc-room");
+    const roomPrice = document.getElementById("price-room");
+    const imageUrl = document.getElementById("image-url");
+    const imagePreview = document.getElementById("image-preview");
+
+    // ==========================
+    // IMAGE PREVIEW
+    // ==========================
+    imageUrl.addEventListener("input", () => {
+        imagePreview.src = imageUrl.value;
+    });
+
+    // ==========================
+    // ADD ROOM
+    // ==========================
+    btnAddRoom.addEventListener("click", async () => {
+        const name = roomName.value;
+        const location = roomLocation.value;
+        const person = roomPerson.value;
+        const description = roomDesc.value;
+        const price = roomPrice.value;
+        const image = imageUrl.value;
+
+        // validation
+        if (!name || !location || !person || !description || !price || !image) {
+            Swal.fire({
+                title: "ERROR",
+                text: "Please fill all fields",
+                icon: "error",
+            });
+            return;
+        }
+
+        try {
+            Swal.fire({
+                title: "Adding Room...",
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+                allowOutsideClick: false,
+            });
+
+            // save to firestore
+            await firebase.firestore().collection("rooms").add({
+                name: name,
+                location: location,
+                person: person,
+                description: description,
+                price: price,
+                image: image,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            });
+
+            Swal.fire({
+                title: "Success",
+                text: "Room added successfully",
+                icon: "success",
+            });
+
+            // reset form
+            roomName.value = "";
+            roomLocation.value = "";
+            roomPerson.value = "";
+            roomDesc.value = "";
+            roomPrice.value = "";
+            imageUrl.value = "";
+            imagePreview.src = "";
+        } catch (error) {
+            console.error(error);
+
+            Swal.fire({
+                title: "ERROR",
+                text: error.message,
+                icon: "error",
+            });
+        }
+    });
 });

@@ -1,68 +1,104 @@
-const name = document.getElementById("name-room");
-const person = document.getElementById("person-room");
-const desc = document.getElementById("desc-room");
-const price = document.getElementById("price-room");
-const image = document.getElementById("image-url");
+// ==========================
+// DETAIL ROOM FIREBASE
+// ==========================
 
+const nameRoom = document.getElementById("name-room");
+const personRoom = document.getElementById("person-room");
+const descRoom = document.getElementById("desc-room");
+const priceRoom = document.getElementById("price-room");
+const imageRoom = document.getElementById("image-url");
+const locationRoom = document.getElementById("location-room");
+
+// lấy id từ URL
 const queryString = window.location.search;
-const id = queryString.split("?")[1];
+const id = new URLSearchParams(queryString).get("id");
 
-// lấy ra danh sác từ localStorage
-const rooms = JSON.parse(localStorage.getItem("rooms")) || [];
+console.log("Room ID:", id);
 
-// tìm id tương ứng
-const room = rooms.find((r) => r.id == id);
+// ==========================
+// LOAD ROOM DETAIL
+// ==========================
+async function loadRoomDetail() {
+    try {
+        // lấy document từ firestore
+        const doc = await firebase.firestore().collection("rooms").doc(id).get();
 
-//dele func
-document.getElementById("deleteBtn").addEventListener("click", () => {
-    Swal.fire({
-        title: `Bạn có chắc chắn muốn xóa này không?`,
-        text: "Sau khi xóa bạn sẽ không thể khôi phục lại!",
-        icon: "info",
-        willClose() {
-            // tìm index cần xóa
-            const roomIndex = rooms.findIndex((r) => r.id == id);
-            console.log(roomIndex);
-            // xóa khỏi mảng
-            if (roomIndex !== -1) {
-                rooms.splice(roomIndex, 1);
-                // lưu lại mảng sau khi xóa vào localStorage
-                localStorage.setItem("rooms", JSON.stringify(rooms));
-                // làm mới lại trang
-                window.history.back();
-            }
-        },
-    });
-});
-// const handleDeleteRoom = (id) => {
-//     Swal.fire({
-//         title: `Bạn có chắc chắn muốn xóa này không?`,
-//         text: "Sau khi xóa bạn sẽ không thể khôi phục lại!",
-//         icon: "info",
-//         willClose() {
-//             // tìm index của món ăn cần xóa
-//             const roomIndex = rooms.findIndex((r) => r.id === id);
-//             // xóa món ăn khỏi mảng
-//             if (roomIndex !== -1) {
-//                 rooms.splice(roomIndex, 1);
-//                 // lưu lại mảng sau khi xóa vào localStorage
-//                 localStorage.setItem("rooms", JSON.stringify(rooms));
-//                 // làm mới lại trang
-//                 window.location.reload();
-//             }
-//         },
-//     });
-// };
+        // kiểm tra room có tồn tại không
+        if (!doc.exists) {
+            Swal.fire({
+                title: "ERROR",
+                text: "Room not found",
+                icon: "error",
+            });
 
-// edit phòng khi bấm nút edit
-document.getElementById("editBtn").href = `edit-room.html?${room.id}`;
+            return;
+        }
 
-// hiển thị thông tin lên trang
-if (room) {
-    name.innerText = room.name;
-    desc.innerText = room.desc;
-    location.innerText = room.location;
-    person.innerText = room.person;
-    price.innerText = room.price;
-    image.src = room.image;
+        const room = doc.data();
+
+        console.log(room);
+
+        // hiển thị thông tin
+        nameRoom.innerText = room.name;
+        descRoom.innerText = room.description;
+        locationRoom.innerText = room.location;
+        personRoom.innerText = room.person;
+        priceRoom.innerText = room.price;
+        imageRoom.src = room.image;
+
+        // edit link
+        document.getElementById("editBtn").href = `edit-room.html?id=${id}`;
+    } catch (error) {
+        console.error(error);
+
+        Swal.fire({
+            title: "ERROR",
+            text: error.message,
+            icon: "error",
+        });
+    }
 }
+
+// gọi function
+loadRoomDetail();
+
+// ==========================
+// DELETE ROOM
+// ==========================
+document.getElementById("deleteBtn").addEventListener("click", async () => {
+    const result = await Swal.fire({
+        title: "Bạn có chắc muốn xóa phòng này?",
+        text: "Sau khi xóa sẽ không thể khôi phục!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Xóa",
+        cancelButtonText: "Hủy",
+    });
+
+    // nếu bấm xác nhận
+    if (result.isConfirmed) {
+        try {
+            // xóa document firestore
+            await firebase.firestore().collection("rooms").doc(id).delete();
+
+            Swal.fire({
+                title: "Deleted",
+                text: "Room deleted successfully",
+                icon: "success",
+            });
+
+            // quay lại trang trước
+            setTimeout(() => {
+                window.history.back();
+            }, 1000);
+        } catch (error) {
+            console.error(error);
+
+            Swal.fire({
+                title: "ERROR",
+                text: error.message,
+                icon: "error",
+            });
+        }
+    }
+});

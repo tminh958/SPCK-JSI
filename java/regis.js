@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 text: `Xin chào ${user.displayName}`,
                 icon: "success",
             });
+            window.location.href = "index.html";
         } catch (error) {
             console.error("Google login error:", error);
 
@@ -102,6 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
             registerForm.reset();
+            window.location.href = "log.html";
         } catch (error) {
             console.error("Register error:", error);
 

@@ -1,77 +1,132 @@
-const btnAddRoom = document.getElementById("btn-add-room");
-const name = document.getElementById("name-room");
-const person = document.getElementById("person-room");
-const desc = document.getElementById("desc-room");
-const price = document.getElementById("price-room");
-const image = document.getElementById("image-url");
-let imagePreview = document.getElementById("image-preview");
+// ==========================
+// EDIT ROOM FIREBASE
+// ==========================
 
-const queryString = window.location.search;
-// lấy ra danh sách từ localStorage
-const rooms = JSON.parse(localStorage.getItem("rooms")) || [];
+const btnAddRoom = document.getElementById("btn-add-room");
+
+const nameRoom = document.getElementById("name-room");
+const locationRoom = document.getElementById("location-room");
+const personRoom = document.getElementById("person-room");
+const descRoom = document.getElementById("desc-room");
+const priceRoom = document.getElementById("price-room");
+const imageRoom = document.getElementById("image-url");
+const imagePreview = document.getElementById("image-preview");
 
 // lấy id từ URL
-const roomId = Number(queryString.split("?")[1]);
+const queryString = window.location.search;
+const roomId = new URLSearchParams(queryString).get("id");
 
-// tìm id tương ứng
-const room = rooms.find((r) => r.id === roomId);
-// hiển thị thông tin lên các input để chỉnh sửa
-if (room) {
-    name.value = room.name;
-    location.value = room.location;
-    person.value = room.person;
-    desc.value = room.desc;
-    price.value = room.price;
-    image.value = room.image;
-    imagePreview.src = room.image;
+console.log("Room ID:", roomId);
+
+// ==========================
+// LOAD ROOM DATA
+// ==========================
+async function loadRoom() {
+    try {
+        const doc = await firebase.firestore().collection("rooms").doc(roomId).get();
+
+        // kiểm tra tồn tại
+        if (!doc.exists) {
+            Swal.fire({
+                title: "ERROR",
+                text: "Room not found",
+                icon: "error",
+            });
+
+            return;
+        }
+
+        const room = doc.data();
+
+        // hiển thị dữ liệu lên input
+        nameRoom.value = room.name;
+        locationRoom.value = room.location;
+        personRoom.value = room.person;
+        descRoom.value = room.description;
+        priceRoom.value = room.price;
+        imageRoom.value = room.image;
+        imagePreview.src = room.image;
+    } catch (error) {
+        console.error(error);
+
+        Swal.fire({
+            title: "ERROR",
+            text: error.message,
+            icon: "error",
+        });
+    }
 }
 
-btnAddRoom.addEventListener("click", () => {
-    // kiểm tra dữ liệu hợp lệ
-    if (!name) {
-        alert("Vui lòng nhập tên món ăn");
-        return;
-    }
-    if (!location) {
-        alert("Vui lòng nhập tên món ăn");
-        return;
-    }
-    if (!person) {
-        alert("Vui lòng nhập tên món ăn");
-        return;
-    }
-    if (!desc) {
-        alert("Vui lòng nhập mô tả món ăn");
-        return;
-    }
-    if (!image) {
-        alert("Vui lòng nhập URL hình ảnh món ăn");
-        return;
-    }
-    if (!price) {
-        alert("Vui lòng nhập tên món ăn");
+// gọi function
+loadRoom();
+
+// ==========================
+// IMAGE PREVIEW
+// ==========================
+imageRoom.addEventListener("input", () => {
+    imagePreview.src = imageRoom.value;
+});
+
+// ==========================
+// UPDATE ROOM
+// ==========================
+btnAddRoom.addEventListener("click", async () => {
+    // lấy value
+    const name = nameRoom.value;
+    const location = locationRoom.value;
+    const person = personRoom.value;
+    const description = descRoom.value;
+    const price = priceRoom.value;
+    const image = imageRoom.value;
+
+    // validation
+    if (!name || !location || !person || !description || !price || !image) {
+        Swal.fire({
+            title: "ERROR",
+            text: "Please fill all fields",
+            icon: "error",
+        });
+
         return;
     }
 
-    // tìm index cần cập nhật
-    const roomIndex = rooms.findIndex((r) => r.id === roomId);
+    try {
+        Swal.fire({
+            title: "Updating...",
+            didOpen: () => {
+                Swal.showLoading();
+            },
+            allowOutsideClick: false,
+        });
 
-    // cập nhật thông tin
-    if (roomIndex !== -1) {
-        rooms[roomIndex] = {
-            id: roomId, // giữ nguyên id
-            name: name.value,
-            location: location.value,
-            person: person.value,
-            desc: desc.value,
-            price: price.value,
-            image: image.value,
-        };
+        // update firestore
+        await firebase.firestore().collection("rooms").doc(roomId).update({
+            name: name,
+            location: location,
+            person: person,
+            description: description,
+            price: price,
+            image: image,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+        });
 
-        // lưu danh sách vào localStorage
-        localStorage.setItem("rooms", JSON.stringify(rooms));
+        Swal.fire({
+            title: "Success",
+            text: "Room updated successfully",
+            icon: "success",
+        });
 
-        // chuyển về trang danh sách
-        window.location.href = "index.html";
+        // chuyển trang
+        setTimeout(() => {
+            window.location.href = "index.html";
+        }, 1000);
+    } catch (error) {
+        console.error(error);
+
+        Swal.fire({
+            title: "ERROR",
+            text: error.message,
+            icon: "error",
+        });
     }
 });

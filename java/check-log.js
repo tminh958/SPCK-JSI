@@ -1,27 +1,63 @@
-var btnLogin = document.getElementById("btnLogin");
-var btnRegis = document.getElementById("btnRegis");
-var profile = document.getElementById("profile");
-var greeting = document.getElementById("greeting");
-var btnLogout = document.getElementById("btn-logout");
+// ==========================
+// CHECK LOGIN FIREBASE
+// ==========================
 
-const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-console.log(currentUser);
+const btnLogin = document.getElementById("btnLogin");
+const btnRegis = document.getElementById("btnRegis");
+const profile = document.getElementById("profile");
+const greeting = document.getElementById("greeting");
+const btnLogout = document.getElementById("btn-logout");
 
-// nếu đã đăng nhập thì ẩn nút đăng nhập và hiện thị thông tin người dùng
-if (currentUser) {
-    btnLogin.classList.add("hidden");
-    btnRegis.classList.add("hidden");
-    profile.classList.remove("hidden");
-    greeting.innerText = `Xin chào, ${currentUser.phoneNumber}`;
-} else {
-    btnLogin.classList.remove("hidden");
-    btnRegis.classList.remove("hidden");
-    profile.classList.add("hidden");
-}
+// lắng nghe trạng thái đăng nhập
+firebase.auth().onAuthStateChanged((user) => {
+    // nếu đã đăng nhập
+    if (user) {
+        console.log("Logged in:", user);
 
-// đăng xuất
-btnLogout.addEventListener("click", () => {
-    console.log("dsfsd");
-    localStorage.removeItem("currentUser");
-    window.location.reload();
+        // ẩn nút login/register
+        btnLogin.classList.add("hidden");
+        btnRegis.classList.add("hidden");
+
+        // hiện profile
+        profile.classList.remove("hidden");
+
+        // hiển thị tên user
+        greeting.innerText = `Xin chào, ${user.displayName || user.email}`;
+    } else {
+        console.log("No user");
+
+        // hiện login/register
+        btnLogin.classList.remove("hidden");
+        btnRegis.classList.remove("hidden");
+
+        // ẩn profile
+        profile.classList.add("hidden");
+    }
+});
+
+// ==========================
+// LOGOUT
+// ==========================
+btnLogout.addEventListener("click", async () => {
+    try {
+        await firebase.auth().signOut();
+
+        Swal.fire({
+            title: "Đăng xuất thành công",
+            icon: "success",
+        });
+
+        // reload page
+        setTimeout(() => {
+            window.location.reload();
+        }, 1000);
+    } catch (error) {
+        console.error(error);
+
+        Swal.fire({
+            title: "ERROR",
+            text: error.message,
+            icon: "error",
+        });
+    }
 });

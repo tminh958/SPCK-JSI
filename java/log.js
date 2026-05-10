@@ -1,50 +1,98 @@
-// chờ cho tới khi trang được tải xong hết thì mới thực hiện câu lệnh bên trong
+// LOGIN PAGE
 
 document.addEventListener("DOMContentLoaded", () => {
     const loginForm = document.getElementById("login-form");
-    console.log(loginForm);
+    const googleLoginBtn = document.getElementById("googleLogin");
 
-    // lắng nghe sự kiện submit trên form đăng ký
-    loginForm.addEventListener("submit", (e) => {
-        e.preventDefault(); // ngăn chặn hành vi mặc định của form
-        let phoneNumber = e.target.phoneNumber.value;
+    // Google Provider
+    const provider = new firebase.auth.GoogleAuthProvider();
+
+    // =========================
+    // LOGIN WITH EMAIL
+    // =========================
+    loginForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        let email = e.target.email.value;
         let password = e.target.password.value;
 
-        if (!phoneNumber || !password) {
-            alert("Vui lòng điền đầy đủ thông tin.");
-            return;
-        }
-
-        //lấy ra dữ liệu trong localStorage
-        // chuyển đổi chuỗi JSON thành mảng đối tượng
-        let users = JSON.parse(localStorage.getItem("users")) || [];
-
-        //kiểm tra email đã tồn tại chưa
-        let userExists = users.find((user) => user.phoneNumber === phoneNumber && user.password === password);
-        console.log(userExists);
-        // nếu không tìm thấy thì báo lỗi
-        if (!userExists) {
+        // kiểm tra dữ liệu rỗng
+        if (!email || !password) {
             Swal.fire({
-                title: "Đăng nhập thất bại",
-                text: " sdt hoặc mật khẩu không đúng.",
+                title: "ERROR",
+                text: "Vui lòng nhập đầy đủ thông tin",
                 icon: "error",
             });
             return;
         }
-        // tạo người dùng mới
-        let newUser = {
-            phoneNumber: userExists.phoneNumber,
-            password: userExists.password,
-        };
-        // lưu người dùng hiện tại vào localStorage
-        localStorage.setItem("currentUser", JSON.stringify(newUser));
+
+        // loading
         Swal.fire({
-            title: "Đăng nhập thành công",
-            icon: "success",
-            // nếu bấm vào nút ok thì di chuyển về trang chủ
-            willClose: () => {
-                window.location.href = "index.html";
+            title: "Loading...",
+            icon: "info",
+            didOpen: () => {
+                Swal.showLoading();
             },
+            allowOutsideClick: false,
         });
+
+        try {
+            // đăng nhập firebase
+            const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
+
+            const user = userCredential.user;
+
+            console.log("Login success:", user);
+
+            Swal.fire({
+                title: "Đăng nhập thành công",
+                text: `Welcome ${user.email}`,
+                icon: "success",
+            });
+
+            // reset form
+            loginForm.reset();
+
+            // chuyển trang
+            window.location.href = "index.html";
+        } catch (error) {
+            console.error("Login error:", error);
+
+            Swal.fire({
+                title: "Login Failed",
+                text: error.message,
+                icon: "error",
+            });
+        }
+    });
+
+    // =========================
+    // LOGIN WITH GOOGLE
+    // =========================
+    googleLoginBtn.addEventListener("click", async () => {
+        try {
+            const result = await firebase.auth().signInWithPopup(provider);
+
+            const user = result.user;
+
+            console.log("Google login success:", user);
+
+            Swal.fire({
+                title: "Google Login Success",
+                text: `Xin chào ${user.displayName}`,
+                icon: "success",
+            });
+
+            // chuyển trang
+            window.location.href = "index.html";
+        } catch (error) {
+            console.error("Google login error:", error);
+
+            Swal.fire({
+                title: "Google Login Failed",
+                text: error.message,
+                icon: "error",
+            });
+        }
     });
 });
