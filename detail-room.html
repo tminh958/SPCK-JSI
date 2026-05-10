@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>MiaHotel</title>
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+        <link rel="shortcut icon" href="https://ih1.redbubble.net/image.2870132373.1841/bg,f8f8f8-flat,750x,075,f-pad,750x1000,f8f8f8.u1.jpg" type="image/x-icon" />
+        <link rel="stylesheet" href="./font-awesome-6.5.1-pro-full/css/all.css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <header class="bg-rose-900 overflow-hidden flex flex-col mb-20">
+            <div class="flex flex-col mx-50">
+                <div class="flex text-white p-5 justify-between">
+                    <a href="index.html" class="lobster-two-regular text-xl z-20">MiaHotel</a>
+                    <div class="flex gap-6 z-20">
+                        <select name="currency" id="" class="font-bold bg-rose-900">
+                            <option value="">VND</option>
+                            <option value="">EUR</option>
+                            <option value="">USD</option>
+                        </select>
+                        <a href="regis.html" class="bg-white text-rose-800 rounded-sm py-1.5 px-3 font-medium shadow-md hover:bg-rose-900 hover:text-white duration-200">Register</a>
+                        <a href="log.html" class="bg-white text-rose-800 rounded-sm py-1.5 px-3 font-medium shadow-md hover:bg-rose-900 hover:text-white duration-200">Sign in</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <section class="mx-60 flex">
+            <img id="image-url" src="https://r-xx.bstatic.com/xdata/images/hotel/263x210/595550178.jpeg?k=1db9bffadd03a0f2a9f0a06ba6c7751b16465f2dd251738f229d7a57dca799ef&o=" alt="" width="500" />
+            <div class="ml-10 w-200">
+                <h1 id="name-room" class="text-3xl font-bold ml-50">Standard room</h1>
+                <p id="location-room"></p>
+                <p>Detail:</p>
+                <p id="desc-room" class="">
+                    Rooms feature air-conditioning, private bathrooms with bidets, hypoallergenic bedding, and free toiletries. Additional amenities include mini-bars, work desks, and soundproofing. +
+                    1 Full bed + 1 Bathroom + including breakfast
+                </p>
+                <p id="person-room">Person</p>
+                <p class="mt-10"><span id="price-room" class="font-semibold">350,000VND</span> per night</p>
+                <!-- button -->
+                <div class="flex gap-2">
+                    <button class="border px-10 py-2 bg-rose-600 text-white rounded-sm hover:cursor-pointer hover:bg-rose-900 hover:text-white duration-200 mt-5">Reserve</button>
+                    <a id="editBtn" class="border border-rose-600 px-10 py-2 bg-white text-black rounded-sm hover:cursor-pointer hover:bg-rose-900 hover:text-white duration-200 mt-5">Edit room</a>
+                    <button id="deleteBtn" class="border border-rose-600 px-6 py-2 bg-white text-black rounded-sm hover:cursor-pointer hover:bg-rose-900 hover:text-white duration-200 mt-5">
+                        Delete room
+                    </button>
+                </div>
+            </div>
+        </section>
+        <footer class="bg-slate-200 h-50 mt-20 overflow-hidden">
+            <p class="text-center text-sm">Copyright &copy; 2025 Miahotel</p>
+            <p class="text-center text-sm mt-2">VietNam</p>
+            <div class="flex">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Agoda_logo_2019.svg/330px-Agoda_logo_2019.svg.png" alt="" class="scale-20" />
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Booking.com_logo.svg/2560px-Booking.com_logo.svg.png" alt="" class="scale-10 -ml-160" />
+            </div>
+        </footer>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="./java/render-detail-room.js"></script>
+    </body>
+</html>

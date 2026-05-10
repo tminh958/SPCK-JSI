@@ -1,0 +1,82 @@
+@import url("https://fonts.googleapis.com/css2?family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+.lobster-two-regular {
+    font-family: "Lobster Two", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+@import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap");
+.libre-baskerville-regular {
+    font-family: "Libre Baskerville", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+@media (min-width: 1280px) {
+    .typing {
+        width: 0;
+        overflow: hidden;
+        white-space: nowrap;
+
+        animation:
+            typing 3s steps(24) forwards,
+            blink 0.7s infinite;
+    }
+}
+
+@keyframes typing {
+    from {
+        width: 0;
+    }
+    to {
+        width: 24ch;
+    }
+}
+
+@keyframes blink {
+    50% {
+        border-color: transparent;
+    }
+}
+
+@media (max-width: 992px) {
+    .slide {
+        animation: slideIn 1s ease;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(-100px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.google-btn {
+    width: 100%;
+    height: 40px;
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 14px;
+    gap: 35px;
+    cursor: pointer;
+    font-size: 13px;
+    color: #757575;
+    font-family: Arial, sans-serif;
+}
+
+.google-btn img {
+    width: 16px;
+    height: 16px;
+}
+
+.google-btn:hover {
+    background: #fafafa;
+}

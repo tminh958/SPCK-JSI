@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>MiaHotel</title>
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+        <link rel="shortcut icon" href="https://ih1.redbubble.net/image.2870132373.1841/bg,f8f8f8-flat,750x,075,f-pad,750x1000,f8f8f8.u1.jpg" type="image/x-icon" />
+        <link rel="stylesheet" href="./font-awesome-6.5.1-pro-full/css/all.css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <header class="bg-rose-900 overflow-hidden flex flex-col mb-10">
+            <img src="img/texture.png" alt="" class="absolute opacity-25 ml-200 scale-175 max-[992px]:hidden" />
+            <img src="img/texture.png" alt="" class="absolute opacity-25 ml-260 mt-25 scale-125 max-[992px]:hidden" />
+
+            <div class="flex text-white p-5 justify-between mb-20 fixed items-center h-14 top-0 w-full z-10 bg-rose-900 overflow-hidden">
+                <a href="index.html" class="lobster-two-regular text-xl z-20">MiaHotel</a>
+                <img src="img/texture.png" alt="" class="absolute opacity-25 scale-175" />
+                <div class="flex gap-6 z-20">
+                    <a href="regis.html" id="btnRegis" class="bg-white text-rose-800 rounded-sm py-1.5 px-3 font-medium shadow-md hover:bg-rose-900 hover:text-white duration-200">Register</a>
+                    <a href="log.html" id="btnLogin" class="bg-white text-rose-800 rounded-sm py-1.5 px-3 font-medium shadow-md hover:bg-rose-900 hover:text-white duration-200">Sign in</a>
+                    <div id="profile" class="ml-15 flex gap-3">
+                        <div class="p-2"><h1 id="greeting" class="text-sm">Xin chào: user</h1></div>
+                        <button id="btn-logout" class="p-2 bg-white text-rose-800 rounded-sm py-1.5 px-3 font-medium shadow-md hover:bg-rose-900 hover:text-white duration-200">Đăng xuất</button>
+                    </div>
+                </div>
+            </div>
+            <div class="xl:mx-50 flex-col flex mt-40 max-[992px]:items-center">
+                <h1 class="text-white text-7xl font-bold mb-1 xl:ml-20 lobster-two-regular typing slide z-1 max-[992px]:">MiaHotel</h1>
+                <h2 class="text-white text-2xl xl:ml-50 typing z-1">Find your stay</h2>
+                <h2 class="text-white text-2xl mb-25 xl:ml-80 typing z-1">eats,breakfast,spa,...</h2>
+            </div>
+        </header>
+        <section class="overflow-hidden flex flex-col xl:mx-50 mx-2">
+            <h1 class="text-2xl font-bold mb-2">Recently</h1>
+            <div class="xl:ml-5">
+                <img src="https://q-xx.bstatic.com/xdata/images/xphoto/814x138/535341132.jpeg?k=9adf4d98ff2d48c5745b37654d2d77e09169647b979dfda9c6baa54198b9fc6c&o=" alt="" class="w-150 rounded-sm" />
+                <p class="absolute -mt-23 ml-5 text-white font-semibold text-xl">Save up to 20% with a deal</p>
+                <p class="absolute -mt-16 ml-8 text-white">Live the dream in a vacation home</p>
+                <p class="absolute -mt-10 ml-8 text-white">Variety of choices</p>
+            </div>
+        </section>
+        <section class="xl:mx-50 mt-10 mx-2 max-[992px]:hidden">
+            <h1 class="text-2xl font-bold">More search</h1>
+            <p class="mb-2 text-gray-500">Choices that people looking for</p>
+            <div class="flex gap-3">
+                <a
+                    class="relative h-[300px] w-full overflow-hidden rounded"
+                    href="https://www.google.com/search?q=ho+chi+minh+city&oq=Ho+c&gs_lcrp=EgZjaHJvbWUqDggAEEUYJxg7GIAEGIoFMg4IABBFGCcYOxiABBiKBTIGCAEQLhgDMgYIAhBFGDkyBwgDEC4YgAQyBggEEAAYAzIGCAUQRRg8MgYIBhBFGDwyBggHEEUYPNIBCDEyNzJqMGo3qAIAsAIA&sourceid=chrome&ie=UTF-8"
+                    target="_blank"
+                >
+                    <p class="absolute text-white m-10 libre-baskerville-regular text-5xl font-extrabold">Ho Chi Minh city</p>
+                    <img src="https://www.new7wonders.com/app/uploads/sites/5/2016/10/ho-chi-minh-city-1348092-2470x1647.jpg" alt="" />
+                </a>
+                <a
+                    class="relative h-[300px] w-full overflow-hidden rounded"
+                    href="https://www.google.com/search?q=ha+noi&oq=Ha+noi++&gs_lcrp=EgZjaHJvbWUqBggAEEUYOzIGCAAQRRg7MgYIARBFGDsyBggCEC4YAzIGCAMQABgDMgYIBBAAGAMyBwgFEAAYgAQyCQgGEC4YChiABDIHCAcQLhiABDIHCAgQABiABDIHCAkQABiPAtIBCDI1ODJqMGo5qAIAsAIA&sourceid=chrome&ie=UTF-8"
+                    target="_blank"
+                >
+                    <p class="absolute text-white m-10 libre-baskerville-regular text-5xl font-extrabold">Ha Noi</p>
+                    <img src="https://datviettour.com.vn/uploads/images/tin-tuc-SEO/mien-bac/Ha-noi/danh-thang/pho-duong-tau-ha-noi-5.jpg" alt="" />
+                </a>
+            </div>
+        </section>
+        <section class="xl:mx-50 mt-10 mx-2">
+            <h1 class="text-2xl font-bold">Rooms <span class="font-light">recommended</span></h1>
+            <p class="mb-2 text-gray-500">You may like</p>
+            <div class="swiper mySwiper">
+                <div id="rooms-container" class="swiper-wrapper">
+                    <a href="add-room.html" class="swiper-slide">
+                        <div class="h-[150px] shadow-md rounded-md overflow-hidden hover:opacity-50 duration-200 w-full text-center border">
+                            <p class="text-8xl">+</p>
+                            <p>Add more room</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+            <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+            <!-- Initialize Swiper -->
+            <script>
+                var swiper = new Swiper(".mySwiper", {
+                    slidesPerView: 4,
+                    spaceBetween: 10,
+                    pagination: {
+                        el: ".swiper-pagination",
+                        clickable: true,
+                    },
+                    navigation: {
+                        nextEl: ".swiper-button-next",
+                        prevEl: ".swiper-button-prev",
+                    },
+                });
+            </script>
+        </section>
+        <section class="mt-10 xl:mx-50 mx-2">
+            <h1 class="text-2xl font-bold">Available in</h1>
+            <p class="mb-2 text-gray-500">Vibe, explore and popular destinations in Vietnam</p>
+            <div class="swiper secSwiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide shadow rounded overflow-hidden font-bold">
+                        <img src="https://www.uncovervietnam.com/wp-content/uploads/2017/11/Buu-Long-Dong-Nai.jpg" alt="" />
+                        Dong Nai
+                    </div>
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+
+            <!-- Swiper JS -->
+            <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+            <!-- Initialize Swiper -->
+            <script>
+                var swiper = new Swiper(".secSwiper", {
+                    slidesPerView: 6,
+                    spaceBetween: 10,
+                    freeMode: true,
+                    pagination: {
+                        el: ".swiper-pagination",
+                        clickable: true,
+                    },
+                    navigation: {
+                        nextEl: ".swiper-button-next",
+                        prevEl: ".swiper-button-prev",
+                    },
+                });
+            </script>
+        </section>
+        <section class="mt-10 xl:mx-50 mx-2">
+            <h1 class="text-2xl font-bold mb-2">We have:</h1>
+            <div class="flex gap-2 max-[992px]:flex-col max-[992px]:mx-10">
+                <div class="relative bg-gray-200 shadow-sm flex flex-col overflow-hidden h-60 rounded-md w-full">
+                    <p class="fa-duotone fa-light fa-thumbs-up scale-500 text-center mt-20"></p>
+                    <h6 class="font-medium xl:text-2xl mt-15 text-center max-[992px]:text-lg">Over 100 millions reviews from visitors</h6>
+                </div>
+                <div class="relative bg-gray-200 shadow-sm flex flex-col overflow-hidden h-60 rounded-md w-full">
+                    <p class="fa-regular fa-clock scale-500 text-center mt-20"></p>
+                    <h6 class="font-medium xl:text-2xl mt-15 text-center max-[992px]:text-lg">Quick room and booking process</h6>
+                </div>
+                <div class="relative bg-gray-200 shadow-sm flex flex-col overflow-hidden h-60 rounded-md w-full">
+                    <p class="fa-regular fa-user-tie-hair scale-500 text-center mt-20"></p>
+                    <h6 class="font-medium xl:text-2xl mt-15 text-center max-[992px]:text-lg">24/7 supporter and contact</h6>
+                </div>
+                <div class="relative bg-gray-200 shadow-sm flex flex-col overflow-hidden h-60 rounded-md w-full">
+                    <p class="fa-regular fa-circle-check scale-500 text-center mt-20"></p>
+                    <h6 class="font-medium xl:text-2xl mt-15 text-center max-[992px]:text-lg">Easy and convenience</h6>
+                </div>
+            </div>
+        </section>
+        <section class="mt-10 xl:mx-50 border h-60 rounded overflow-hidden mx-2 max-[992px]:hidden">
+            <div class="h-50 w-50 bg-rose-500 rounded-full -ml-10 -mt-10"></div>
+            <img src="img/illu.png" alt="" class="w-150 -mt-80 ml-150 opacity-50 relative" />
+            <div class="h-200 w-200 -mt-100 ml-10 bg-rose-900 rounded-full relative"></div>
+            <h1 class="absolute -mt-160 text-white ml-60 text-2xl font-semibold font-serif">Find your experience now</h1>
+            <p class="text-white absolute -mt-145 text-xl ml-65 font-serif">Try our service</p>
+            <div class="flex absolute -mt-130 ml-60 gap-5">
+                <a href="log.html" class="px-3 py-1 bg-white text-rose-900 rounded-sm hover:cursor-pointer hover:bg-rose-900 hover:text-white duration-200">Log in</a>
+                <a href="regis.html" class="px-3 py-1 bg-rose-600 text-white rounded-sm hover:cursor-pointer hover:bg-rose-900 hover:text-white duration-200">Sign up</a>
+            </div>
+        </section>
+        <footer class="bg-rose-900 text-white h-50 mt-20 overflow-hidden flex flex-col justify-center items-center">
+            <div>LOGO</div>
+            <div>Pages facebook tiktok</div>
+            <div>Policy</div>
+            <div>Contact</div>
+            <div><address>123 Main Street, City, Country</address></div>
+            <div class="mt-5">
+                <p class="text-center text-sm">Copyright &copy; 2025 Miahotel</p>
+                <p class="text-center text-sm">VietNam</p>
+            </div>
+        </footer>
+        <!--link cdn firebase-->
+        <script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+        <script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
+        <script defer="" src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+        <script defer="" src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+        <!--cau hinh nhan dien-->
+        <script defer src="./java/firebase.config.js"></script>
+        <script defer src="./java/main.js"></script>
+        <!--check login-->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script defer src="./java/check-log.js"></script>
+        <script defer src="./java/render-rooms.js"></script>
+    </body>
+</html>
